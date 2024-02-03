@@ -6,7 +6,7 @@
 
 .imgContainer {
     flex: 1;
-    height: 500px;
+    height: 450px;
     position: relative;
 }
 
@@ -34,5 +34,20 @@
   color: var(--text);
 }
 
+.form button {
+    padding: 20px;
+    background-color: var(--btn);
+    color: var(--text);
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+    }
+}
   
   

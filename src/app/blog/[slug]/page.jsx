@@ -1,7 +1,20 @@
 import Image from 'next/image'
 import styles from './singlePost.module.css'
 
-const SingleBlogPage = () => {
+const getData=async()=>{
+  const res=await fetch(`https://jsonplaceholder.typicode.com/posts/${slug}`, {next:{revalidate:3600}});
+
+  if(!res.ok)
+    throw new Error("Something went wrong!");
+
+  return res.json();
+}
+
+const SingleBlogPage = async({params}) => {
+
+    const {slug}=params;
+    const post=await getData(slug);
+
     return (
       <div className={styles.container}>
         <div className={styles.imgContainer}>
@@ -26,7 +39,7 @@ const SingleBlogPage = () => {
           <div className={styles.content}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit odio officiis error quidem eius, neque alias consequatur temporibus nemo excepturi, quisquam natus, doloribus tempore veniam. Natus, consequuntur doloremque. Officiis, cupiditate.</div>
         </div>
       </div>
-    )
-}
+    );
+};
   
 export default SingleBlogPage

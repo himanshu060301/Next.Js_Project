@@ -1,19 +1,28 @@
 import Image from 'next/image'
 import styles from './singlePost.module.css'
+import PostUser from '@/components/postUser/postUser';
+import { Suspense } from 'react';
+import { getPost } from '@/lib/data';
 
-const getData=async()=>{
-  const res=await fetch(`https://jsonplaceholder.typicode.com/posts/${slug}`, {next:{revalidate:3600}});
+// FETCH DATA WITH AN API
+// const getData=async(slug)=>{
+//   const res=await fetch(`https://jsonplaceholder.typicode.com/posts/${slug}`);
 
-  if(!res.ok)
-    throw new Error("Something went wrong!");
+//   if(!res.ok)
+//     throw new Error("Something went wrong!");
 
-  return res.json();
-}
+//   return res.json();
+// }
 
 const SingleBlogPage = async({params}) => {
 
     const {slug}=params;
-    const post=await getData(slug);
+
+    // FETCH DATA WITH AN API
+    // const post=await getData(slug);
+
+    // FETCH DATA WITHOUT AN API
+    const post=await getPost(slug);
 
     return (
       <div className={styles.container}>
@@ -21,25 +30,28 @@ const SingleBlogPage = async({params}) => {
           <Image src="https://images.pexels.com/photos/19137460/pexels-photo-19137460/free-photo-of-turquoise-sea-off-the-coast-of-bali.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" fill className={styles.img} />
         </div>
         <div className={styles.textContainer}>
-          <h1 className={styles.title}>Title</h1>
+          <h1 className={styles.title}>{post?.title}</h1>
           <div className={styles.detail}>
             <Image className={styles.avatar}
               src="https://images.pexels.com/photos/19137460/pexels-photo-19137460/free-photo-of-turquoise-sea-off-the-coast-of-bali.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" 
               width={50} height={50}
             />
-            <div className={styles.detailText}>
-              <span className={styles.detailTitle}>Author</span>
-              <span className={styles.detailValue}>Himanshu</span>
-            </div>
+            {post && (
+              <Suspense fallback={<div>Loading...</div>}>
+                <PostUser userId={post.userId}/>
+              </Suspense>
+            )}
             <div className={styles.detailText}>
               <span className={styles.detailTitle}>Published</span>
               <span className={styles.detailValue}>01.01.2024</span>
             </div>
           </div>
-          <div className={styles.content}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit odio officiis error quidem eius, neque alias consequatur temporibus nemo excepturi, quisquam natus, doloribus tempore veniam. Natus, consequuntur doloremque. Officiis, cupiditate.</div>
+          <div className={styles.content}>
+            {post?.body}
+          </div>
         </div>
       </div>
     );
 };
   
-export default SingleBlogPage
+export default SingleBlogPage;

@@ -4,6 +4,11 @@ import dynamic from 'next/dynamic'
 
 // const HydrationTestNoSSR= dynamic(()=> import("@/components/hydrationTest"), {ssr:false})
 
+export const metadata = {
+  title: 'Contact Page',
+  description: 'Contact description',
+}
+
 const ContactPage = () => {
   return (
     <div className={styles.container}>

@@ -15,4 +15,12 @@
     gap: 30px;
     border-radius: 5px;
 }
+
+.github{
+    width: 50%;
+    padding: 20px;
+    cursor: pointer;
+    background-color: rgb(182, 105, 203);
+    color: var(--textColor);
+}
   

@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { signIn, signOut } from "./auth";
 import { Post, User } from "./models";
 import { connectToDb } from "./utils";
